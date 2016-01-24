@@ -14,7 +14,7 @@ namespace Offliner
             private readonly static string regexString =  "href\\s*=\\s*(?:[\"'](?<1>[^\"']*)[\"']|(?<1>\\S+))";
             private readonly static ThreadLocal<Regex> _Regex = new ThreadLocal<Regex>(() => new Regex(regexString, RegexOptions.Compiled | RegexOptions.IgnoreCase));
 
-            public async Task<PageInfo> GrabAsync(string url, IProgress<GrebberProgressInfo> progress) 
+            public async Task<PageInfo> GrabAsync(string url, IProgress<GrabberProgressInfo> progress) 
             {
                 var content = await new WebClient().DownloadStringTaskAsync(url);
                 var hrefs = _Regex.Value.Matches(content).Values()
@@ -23,10 +23,10 @@ namespace Offliner
                     .ToArray();
                 
                 var page = new PageInfo(url, content, hrefs);
-                progress.Report(new GrebberProgressInfo(page, true));
+                progress.Report(new GrabberProgressInfo(page, true));
                 return page; 
             }
-            public async Task<PageInfo[]> GrabAsync(string[] urls, IProgress<GrebberProgressInfo> progress) 
+            public async Task<PageInfo[]> GrabAsync(string[] urls, IProgress<GrabberProgressInfo> progress) 
             {
                 var pages = from url in urls
                             select this.GrabAsync(url, progress);    
@@ -34,9 +34,9 @@ namespace Offliner
             }
 
     }
-    public class GrebberProgressInfo
+    public class GrabberProgressInfo
     {
-        public GrebberProgressInfo(PageInfo page, bool isDone) { Page = page; IsDone = isDone; }
+        public GrabberProgressInfo(PageInfo page, bool isDone) { Page = page; IsDone = isDone; }
         
         public PageInfo Page { get; }
         public bool IsDone { get; }
