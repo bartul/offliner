@@ -39,6 +39,8 @@ namespace Offliner
 
         public static async Task TakeOfflineAsync(string url, int levelsDeep)
         {
+            // TODO: Encapsulate/extract into single class, merge grabber and saver into single async operation per page
+            
             var newUrls = new string[] { url };
             for (var level = 1; level <= levelsDeep && newUrls.Length > 0; level++)
             {
