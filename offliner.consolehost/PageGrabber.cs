@@ -1,12 +1,10 @@
 using System;
 using System.Net;
-using System.IO;
 using System.Linq;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
-using Offliner;
 
 namespace Offliner 
 {
